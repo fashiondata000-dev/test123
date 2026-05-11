@@ -1,1 +1,1321 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NOIR STUDIO — GTM 실습용 패션 사이트</title>
+
+  <!-- =====================================================
+       GTM 실습 안내
+       -------------------------------------------------------
+       1. tagmanager.google.com 에서 새 컨테이너 생성
+       2. 아래 GTM-XXXXXXX 를 본인의 GTM ID로 교체
+       3. 브라우저에서 이 파일을 열기
+       4. GTM 미리보기 모드 켜기
+       5. 아래 실습 이벤트 목록 확인하며 실습
+       ===================================================== -->
+
+  <!-- GTM 스니펫 (head) — GTM ID 교체 필요 -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f4f0;
+      --gray: #8a8a8a;
+      --light: #e8e6e0;
+      --accent: #c8a97e;
+      --danger: #c44b3a;
+      --success: #3a8c5e;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      line-height: 1.6;
+      cursor: default;
+    }
+
+    /* ── 네비게이션 ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--light);
+      padding: 0 48px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--black);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .cart-count {
+      background: var(--black);
+      color: var(--white);
+      font-size: 10px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+    }
+
+    /* ── 히어로 ── */
+    .hero {
+      height: 80vh;
+      min-height: 520px;
+      background: var(--black);
+      display: flex;
+      align-items: flex-end;
+      padding: 64px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 60px,
+          rgba(255,255,255,0.015) 60px,
+          rgba(255,255,255,0.015) 61px
+        );
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .hero-label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 0.95;
+      margin-bottom: 32px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .btn-hero {
+      display: inline-block;
+      padding: 14px 40px;
+      border: 1px solid var(--white);
+      color: var(--white);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+    }
+
+    .btn-hero:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    /* ── GTM 실습 가이드 패널 ── */
+    .gtm-guide {
+      background: var(--black);
+      color: var(--white);
+      padding: 32px 48px;
+      border-top: 3px solid var(--accent);
+    }
+
+    .gtm-guide-title {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .gtm-events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .gtm-event-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      padding: 14px 16px;
+    }
+
+    .gtm-event-name {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+      font-family: monospace;
+    }
+
+    .gtm-event-desc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ── 섹션 공통 ── */
+    .section { padding: 80px 48px; }
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      font-weight: 300;
+      margin-bottom: 48px;
+    }
+
+    /* ── 상품 그리드 ── */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2px;
+    }
+
+    .product-card {
+      background: var(--light);
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .product-card:hover .product-overlay { opacity: 1; }
+    .product-card:hover .product-img-placeholder { transform: scale(1.03); }
+
+    .product-img-placeholder {
+      height: 360px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.5s ease;
+      position: relative;
+    }
+
+    .product-silhouette {
+      opacity: 0.12;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 120px;
+      font-style: italic;
+      color: var(--black);
+      user-select: none;
+    }
+
+    .product-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .product-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10,10,10,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .btn-quick-view {
+      padding: 12px 28px;
+      border: 1px solid var(--white);
+      color: var(--white);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: transparent;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-quick-view:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .product-info { padding: 20px 20px 24px; }
+
+    .product-category {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 6px;
+    }
+
+    .product-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+
+    .product-price {
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    .product-price strong {
+      color: var(--black);
+      font-weight: 500;
+    }
+
+    /* ── 상품 상세 모달 ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10,10,10,0.85);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--white);
+      max-width: 840px;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-img {
+      background: var(--light);
+      height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-img-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 100px;
+      font-style: italic;
+      opacity: 0.1;
+    }
+
+    .modal-content {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-close {
+      align-self: flex-end;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--gray);
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+
+    .modal-category {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .modal-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 300;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .modal-price {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+
+    .modal-desc {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 28px;
+      flex: 1;
+    }
+
+    .size-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .size-options {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .size-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--light);
+      background: transparent;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .size-btn:hover, .size-btn.selected {
+      background: var(--black);
+      color: var(--white);
+      border-color: var(--black);
+    }
+
+    .btn-add-cart {
+      width: 100%;
+      padding: 16px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-bottom: 12px;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+    }
+
+    .btn-add-cart:hover { background: #2a2a2a; }
+
+    .btn-wishlist {
+      width: 100%;
+      padding: 14px;
+      background: transparent;
+      color: var(--black);
+      border: 1px solid var(--light);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s;
+    }
+
+    .btn-wishlist:hover { border-color: var(--black); }
+
+    /* ── 장바구니 사이드바 ── */
+    .cart-sidebar {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 420px;
+      height: 100vh;
+      background: var(--white);
+      border-left: 1px solid var(--light);
+      z-index: 300;
+      transition: right 0.35s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-sidebar.open { right: 0; }
+
+    .cart-header {
+      padding: 28px 32px;
+      border-bottom: 1px solid var(--light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-header-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 400;
+    }
+
+    .cart-close {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--gray);
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 32px;
+    }
+
+    .cart-item {
+      display: flex;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--light);
+    }
+
+    .cart-item-img {
+      width: 72px;
+      height: 88px;
+      background: var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-style: italic;
+      opacity: 0.3;
+      flex-shrink: 0;
+    }
+
+    .cart-item-info { flex: 1; }
+
+    .cart-item-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .cart-item-size {
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .cart-item-price { font-size: 14px; font-weight: 500; }
+
+    .cart-item-remove {
+      background: none;
+      border: none;
+      color: var(--gray);
+      cursor: pointer;
+      font-size: 14px;
+      align-self: flex-start;
+    }
+
+    .cart-footer {
+      padding: 24px 32px;
+      border-top: 1px solid var(--light);
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      font-size: 15px;
+    }
+
+    .cart-total-label { color: var(--gray); }
+    .cart-total-value { font-weight: 500; }
+
+    .btn-checkout {
+      width: 100%;
+      padding: 16px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: background 0.2s;
+    }
+
+    .btn-checkout:hover { background: #2a2a2a; }
+
+    /* ── 구매 완료 화면 ── */
+    .checkout-section {
+      padding: 80px 48px;
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+      display: none;
+    }
+
+    .checkout-section.show { display: block; }
+
+    .checkout-icon {
+      width: 64px;
+      height: 64px;
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 24px;
+    }
+
+    .checkout-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 40px;
+      font-weight: 300;
+      margin-bottom: 12px;
+    }
+
+    .checkout-sub {
+      color: var(--gray);
+      margin-bottom: 40px;
+    }
+
+    /* ── 뉴스레터 ── */
+    .newsletter {
+      padding: 80px 48px;
+      background: var(--light);
+      text-align: center;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 440px;
+      margin: 32px auto 0;
+      gap: 0;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      padding: 14px 20px;
+      border: 1px solid var(--black);
+      border-right: none;
+      background: transparent;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+    }
+
+    .btn-subscribe {
+      padding: 14px 24px;
+      background: var(--black);
+      color: var(--white);
+      border: 1px solid var(--black);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      white-space: nowrap;
+    }
+
+    /* ── dataLayer 로그 패널 ── */
+    .datalayer-log {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      width: 380px;
+      max-height: 280px;
+      background: rgba(10,10,10,0.95);
+      border: 1px solid rgba(200,169,126,0.4);
+      border-radius: 4px;
+      z-index: 500;
+      font-family: monospace;
+      font-size: 11px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .datalayer-log-header {
+      padding: 10px 14px;
+      background: rgba(200,169,126,0.15);
+      border-bottom: 1px solid rgba(200,169,126,0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--accent);
+      letter-spacing: 1px;
+      font-size: 10px;
+    }
+
+    .log-clear {
+      background: none;
+      border: none;
+      color: rgba(255,255,255,0.3);
+      cursor: pointer;
+      font-size: 10px;
+      font-family: monospace;
+    }
+
+    .log-clear:hover { color: var(--accent); }
+
+    .datalayer-log-body {
+      overflow-y: auto;
+      flex: 1;
+      padding: 10px 14px;
+    }
+
+    .log-entry {
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      line-height: 1.5;
+    }
+
+    .log-entry:last-child { border-bottom: none; }
+
+    .log-event { color: var(--accent); }
+    .log-key { color: #7cb8e0; }
+    .log-val { color: #9de09d; }
+    .log-time { color: rgba(255,255,255,0.25); font-size: 9px; }
+
+    /* ── 토스트 알림 ── */
+    .toast {
+      position: fixed;
+      top: 80px;
+      right: 24px;
+      background: var(--black);
+      color: var(--white);
+      padding: 14px 20px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      z-index: 400;
+      transform: translateX(120%);
+      transition: transform 0.3s ease;
+      border-left: 3px solid var(--accent);
+    }
+
+    .toast.show { transform: translateX(0); }
+
+    footer {
+      padding: 40px 48px;
+      border-top: 1px solid var(--light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      letter-spacing: 4px;
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: var(--gray);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GTM noscript — GTM ID 교체 필요 -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <!-- ── 네비게이션 ── -->
+  <nav>
+    <div class="nav-logo">Noir Studio</div>
+    <ul class="nav-links">
+      <li><a href="#" onclick="trackNavClick('신상품')">신상품</a></li>
+      <li><a href="#" onclick="trackNavClick('아우터')">아우터</a></li>
+      <li><a href="#" onclick="trackNavClick('드레스')">드레스</a></li>
+      <li><a href="#" onclick="trackNavClick('액세서리')">액세서리</a></li>
+    </ul>
+    <div class="nav-right">
+      <span style="font-size:12px;letter-spacing:1px;cursor:pointer" onclick="openCart()">
+        BAG <span class="cart-count" id="cart-count">0</span>
+      </span>
+    </div>
+  </nav>
+
+  <!-- ── 히어로 ── -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-label">2025 Autumn Collection</p>
+      <h1>Draped in<br><em>Silence</em></h1>
+      <button class="btn-hero" onclick="trackHeroCTA()">컬렉션 보기</button>
+    </div>
+  </section>
+
+  <!-- ── GTM 실습 가이드 패널 ── -->
+  <div class="gtm-guide">
+    <p class="gtm-guide-title">GTM 실습 이벤트 목록 — 아래 행동을 하면 dataLayer에 이벤트가 쌓입니다</p>
+    <div class="gtm-events-grid">
+      <div class="gtm-event-card">
+        <div class="gtm-event-name">page_view</div>
+        <div class="gtm-event-desc">페이지 로드 시 자동 발생</div>
+      </div>
+      <div class="gtm-event-card">
+        <div class="gtm-event-name">view_item</div>
+        <div class="gtm-event-desc">상품 카드 클릭 → 상세 팝업</div>
+      </div>
+      <div class="gtm-event-card">
+        <div class="gtm-event-name">select_size</div>
+        <div class="gtm-event-desc">사이즈 버튼 선택</div>
+      </div>
+      <div class="gtm-event-card">
+        <div class="gtm-event-name">add_to_cart</div>
+        <div class="gtm-event-desc">장바구니 담기 버튼 클릭</div>
+      </div>
+      <div class="gtm-event-card">
+        <div class="gtm-event-name">add_to_wishlist</div>
+        <div class="gtm-event-desc">위시리스트 담기 클릭</div>
+      </div>
+      <div class="gtm-event-card">
+        <div class="gtm-event-name">begin_checkout</div>
+        <div class="gtm-event-desc">결제하기 버튼 클릭</div>
+      </div>
+      <div class="gtm-event-card">
+        <div class="gtm-event-name">purchase</div>
+        <div class="gtm-event-desc">구매 완료 (결제 버튼 → 확인)</div>
+      </div>
+      <div class="gtm-event-card">
+        <div class="gtm-event-name">newsletter_signup</div>
+        <div class="gtm-event-desc">뉴스레터 이메일 구독</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 상품 목록 ── -->
+  <section class="section" id="products">
+    <p class="section-label">New Arrivals</p>
+    <h2 class="section-title">이번 시즌 컬렉션</h2>
+    <div class="products-grid" id="products-grid"></div>
+  </section>
+
+  <!-- ── 뉴스레터 ── -->
+  <section class="newsletter">
+    <p class="section-label">Exclusive</p>
+    <h2 class="section-title" style="margin-bottom:8px;">컬렉션 소식 먼저 받기</h2>
+    <p style="color:var(--gray);font-size:13px;">신상품, 프라이빗 세일을 가장 먼저 만나보세요.</p>
+    <form class="newsletter-form" onsubmit="trackNewsletterSignup(event)">
+      <input class="newsletter-input" type="email" id="email-input" placeholder="이메일 주소" required>
+      <button class="btn-subscribe" type="submit">구독하기</button>
+    </form>
+  </section>
+
+  <!-- ── 구매 완료 화면 ── -->
+  <section class="checkout-section" id="checkout-section">
+    <div class="checkout-icon">✓</div>
+    <h2 class="checkout-title">주문이 완료되었습니다</h2>
+    <p class="checkout-sub">GTM purchase 이벤트가 dataLayer에 푸시되었습니다.</p>
+    <button class="btn-hero" onclick="resetCheckout()">다시 실습하기</button>
+  </section>
+
+  <!-- ── 푸터 ── -->
+  <footer>
+    <div class="footer-logo">Noir Studio</div>
+    <p class="footer-copy">GTM 실습용 가상 사이트 — 실제 결제 없음</p>
+  </footer>
+
+  <!-- ── 상품 상세 모달 ── -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+    <div class="modal" id="modal">
+      <div class="modal-img">
+        <div class="modal-img-text" id="modal-img-text">N</div>
+      </div>
+      <div class="modal-content">
+        <button class="modal-close" onclick="closeModalDirect()">✕</button>
+        <p class="modal-category" id="modal-category">카테고리</p>
+        <h3 class="modal-name" id="modal-name">상품명</h3>
+        <p class="modal-price" id="modal-price">₩0</p>
+        <p class="modal-desc" id="modal-desc">상품 설명</p>
+        <p class="size-label">Size</p>
+        <div class="size-options" id="size-options">
+          <button class="size-btn" onclick="selectSize(this,'XS')">XS</button>
+          <button class="size-btn" onclick="selectSize(this,'S')">S</button>
+          <button class="size-btn" onclick="selectSize(this,'M')">M</button>
+          <button class="size-btn" onclick="selectSize(this,'L')">L</button>
+          <button class="size-btn" onclick="selectSize(this,'XL')">XL</button>
+        </div>
+        <button class="btn-add-cart" onclick="addToCart()">장바구니 담기</button>
+        <button class="btn-wishlist" onclick="addToWishlist()">위시리스트 담기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 장바구니 사이드바 ── -->
+  <div class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+      <span class="cart-header-title">장바구니</span>
+      <button class="cart-close" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <p style="color:var(--gray);font-size:13px;text-align:center;padding:40px 0;">
+        장바구니가 비어있습니다
+      </p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span class="cart-total-label">합계</span>
+        <span class="cart-total-value" id="cart-total">₩0</span>
+      </div>
+      <button class="btn-checkout" onclick="beginCheckout()">결제하기</button>
+    </div>
+  </div>
+
+  <!-- ── dataLayer 실시간 로그 패널 ── -->
+  <div class="datalayer-log">
+    <div class="datalayer-log-header">
+      <span>dataLayer 실시간 로그</span>
+      <button class="log-clear" onclick="clearLog()">clear</button>
+    </div>
+    <div class="datalayer-log-body" id="log-body">
+      <div class="log-entry" style="color:rgba(255,255,255,0.3)">
+        이벤트가 발생하면 여기에 표시됩니다...
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 토스트 ── -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ── 상품 데이터 ──
+    const products = [
+      {
+        id: 'P001',
+        name: '오버사이즈 울 코트',
+        category: '아우터',
+        price: 298000,
+        desc: '울 혼방 소재의 클래식 오버사이즈 실루엣. 봄·가을 레이어링에 최적화된 미드웨이트 구조.',
+        badge: 'New',
+        letter: 'O'
+      },
+      {
+        id: 'P002',
+        name: '실크 슬립 드레스',
+        category: '드레스',
+        price: 186000,
+        desc: '100% 실크 새틴 소재. 바이어스 컷으로 몸의 라인을 자연스럽게 따르는 미니멀 드레스.',
+        badge: 'Best',
+        letter: 'S'
+      },
+      {
+        id: 'P003',
+        name: '와이드 레그 팬츠',
+        category: '바텀',
+        price: 142000,
+        desc: '고중량 크레이프 소재. 허리 밴드 처리로 편안하면서도 드레이프가 아름다운 실루엣.',
+        badge: null,
+        letter: 'W'
+      },
+      {
+        id: 'P004',
+        name: '핸드메이드 버킷햇',
+        category: '액세서리',
+        price: 89000,
+        desc: '장인이 손으로 만든 울 펠트 소재. 성별 무관하게 착용 가능한 언이즈 사이즈.',
+        badge: 'Limited',
+        letter: 'H'
+      },
+      {
+        id: 'P005',
+        name: '니트 카디건',
+        category: '니트',
+        price: 164000,
+        desc: '메리노 울 100% 파인 게이지 니트. 자연스러운 색감의 멜란지 원사를 사용.',
+        badge: 'New',
+        letter: 'K'
+      },
+      {
+        id: 'P006',
+        name: '레더 미니 숄더백',
+        category: '백',
+        price: 324000,
+        desc: '풀그레인 소가죽 소재. 조절 가능한 체인 스트랩으로 숄더백·크로스백 겸용.',
+        badge: null,
+        letter: 'B'
+      }
+    ];
+
+    // ── 상태 ──
+    let cart = [];
+    let currentProduct = null;
+    let selectedSize = null;
+
+    // ── dataLayer 초기화 ──
+    window.dataLayer = window.dataLayer || [];
+
+    // ── 유틸 ──
+    function formatPrice(n) {
+      return '₩' + n.toLocaleString('ko-KR');
+    }
+
+    function now() {
+      return new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2200);
+    }
+
+    // ── dataLayer 로그 ──
+    function logEvent(eventName, params) {
+      const body = document.getElementById('log-body');
+      const firstEntry = body.querySelector('.log-entry[style]');
+      if (firstEntry) firstEntry.remove();
+
+      const div = document.createElement('div');
+      div.className = 'log-entry';
+
+      let html = `<div><span class="log-time">${now()}</span> <span class="log-event">${eventName}</span></div>`;
+      if (params) {
+        for (const [k, v] of Object.entries(params)) {
+          html += `<div style="padding-left:8px"><span class="log-key">${k}</span>: <span class="log-val">${JSON.stringify(v)}</span></div>`;
+        }
+      }
+      div.innerHTML = html;
+      body.insertBefore(div, body.firstChild);
+    }
+
+    function clearLog() {
+      document.getElementById('log-body').innerHTML =
+        '<div class="log-entry" style="color:rgba(255,255,255,0.3)">로그가 초기화되었습니다...</div>';
+    }
+
+    // ── dataLayer push 래퍼 ──
+    function pushEvent(eventName, params) {
+      const payload = { event: eventName, ...params };
+      window.dataLayer.push(payload);
+      logEvent(eventName, params);
+    }
+
+    // ── 상품 렌더링 ──
+    function renderProducts() {
+      const grid = document.getElementById('products-grid');
+      grid.innerHTML = products.map(p => `
+        <div class="product-card" onclick="openProduct('${p.id}')">
+          <div class="product-img-placeholder" style="background:${getBg(p.category)}">
+            <div class="product-silhouette">${p.letter}</div>
+            ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
+            <div class="product-overlay">
+              <button class="btn-quick-view" onclick="event.stopPropagation(); openProduct('${p.id}')">빠른 보기</button>
+            </div>
+          </div>
+          <div class="product-info">
+            <p class="product-category">${p.category}</p>
+            <p class="product-name">${p.name}</p>
+            <p class="product-price"><strong>${formatPrice(p.price)}</strong></p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function getBg(cat) {
+      const map = {
+        '아우터': '#ddd8d0', '드레스': '#d8d0d8',
+        '바텀': '#d0d8d8', '액세서리': '#d8ddd0',
+        '니트': '#ddd0d0', '백': '#d8d4cc'
+      };
+      return map[cat] || '#e0ddd8';
+    }
+
+    // ── 상품 상세 열기 ──
+    function openProduct(id) {
+      currentProduct = products.find(p => p.id === id);
+      if (!currentProduct) return;
+      selectedSize = null;
+
+      document.getElementById('modal-img-text').textContent = currentProduct.letter;
+      document.getElementById('modal-category').textContent = currentProduct.category;
+      document.getElementById('modal-name').textContent = currentProduct.name;
+      document.getElementById('modal-price').textContent = formatPrice(currentProduct.price);
+      document.getElementById('modal-desc').textContent = currentProduct.desc;
+
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+      document.getElementById('modal-overlay').classList.add('active');
+
+      pushEvent('view_item', {
+        item_id: currentProduct.id,
+        item_name: currentProduct.name,
+        item_category: currentProduct.category,
+        price: currentProduct.price,
+        currency: 'KRW'
+      });
+    }
+
+    function closeModal(e) {
+      if (e.target === document.getElementById('modal-overlay')) closeModalDirect();
+    }
+
+    function closeModalDirect() {
+      document.getElementById('modal-overlay').classList.remove('active');
+      currentProduct = null;
+      selectedSize = null;
+    }
+
+    // ── 사이즈 선택 ──
+    function selectSize(btn, size) {
+      document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedSize = size;
+
+      pushEvent('select_size', {
+        item_id: currentProduct?.id,
+        item_name: currentProduct?.name,
+        size: size
+      });
+    }
+
+    // ── 장바구니 담기 ──
+    function addToCart() {
+      if (!currentProduct) return;
+      if (!selectedSize) {
+        showToast('사이즈를 먼저 선택해 주세요');
+        return;
+      }
+
+      const existing = cart.find(i => i.id === currentProduct.id && i.size === selectedSize);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...currentProduct, size: selectedSize, qty: 1 });
+      }
+
+      updateCartUI();
+      closeModalDirect();
+      showToast(`${currentProduct.name} — 장바구니에 담겼습니다`);
+
+      pushEvent('add_to_cart', {
+        item_id: currentProduct.id,
+        item_name: currentProduct.name,
+        item_category: currentProduct.category,
+        price: currentProduct.price,
+        size: selectedSize,
+        currency: 'KRW'
+      });
+    }
+
+    // ── 위시리스트 ──
+    function addToWishlist() {
+      if (!currentProduct) return;
+      showToast(`${currentProduct.name} — 위시리스트에 추가됐습니다`);
+
+      pushEvent('add_to_wishlist', {
+        item_id: currentProduct.id,
+        item_name: currentProduct.name,
+        item_category: currentProduct.category,
+        price: currentProduct.price,
+        currency: 'KRW'
+      });
+    }
+
+    // ── 장바구니 UI ──
+    function updateCartUI() {
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+      const count = cart.reduce((s, i) => s + i.qty, 0);
+      document.getElementById('cart-count').textContent = count;
+      document.getElementById('cart-total').textContent = formatPrice(total);
+
+      const itemsEl = document.getElementById('cart-items');
+      if (cart.length === 0) {
+        itemsEl.innerHTML = '<p style="color:var(--gray);font-size:13px;text-align:center;padding:40px 0;">장바구니가 비어있습니다</p>';
+        return;
+      }
+
+      itemsEl.innerHTML = cart.map((item, idx) => `
+        <div class="cart-item">
+          <div class="cart-item-img">${item.letter}</div>
+          <div class="cart-item-info">
+            <p class="cart-item-name">${item.name}</p>
+            <p class="cart-item-size">SIZE ${item.size} · QTY ${item.qty}</p>
+            <p class="cart-item-price">${formatPrice(item.price * item.qty)}</p>
+          </div>
+          <button class="cart-item-remove" onclick="removeFromCart(${idx})">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function removeFromCart(idx) {
+      const item = cart[idx];
+      cart.splice(idx, 1);
+      updateCartUI();
+      pushEvent('remove_from_cart', {
+        item_id: item.id,
+        item_name: item.name,
+        price: item.price,
+        currency: 'KRW'
+      });
+    }
+
+    function openCart() {
+      document.getElementById('cart-sidebar').classList.add('open');
+    }
+
+    function closeCart() {
+      document.getElementById('cart-sidebar').classList.remove('open');
+    }
+
+    // ── 결제 시작 ──
+    function beginCheckout() {
+      if (cart.length === 0) {
+        showToast('장바구니에 상품을 담아주세요');
+        return;
+      }
+
+      const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+
+      pushEvent('begin_checkout', {
+        value: total,
+        currency: 'KRW',
+        items: cart.map(i => ({
+          item_id: i.id,
+          item_name: i.name,
+          price: i.price,
+          quantity: i.qty,
+          size: i.size
+        }))
+      });
+
+      closeCart();
+
+      // 구매 완료 이벤트 (실습용 — 실제 결제 없이 바로 발생)
+      setTimeout(() => {
+        const orderId = 'ORD-' + Date.now();
+        pushEvent('purchase', {
+          transaction_id: orderId,
+          value: total,
+          currency: 'KRW',
+          items: cart.map(i => ({
+            item_id: i.id,
+            item_name: i.name,
+            item_category: i.category,
+            price: i.price,
+            quantity: i.qty
+          }))
+        });
+
+        cart = [];
+        updateCartUI();
+        document.getElementById('checkout-section').classList.add('show');
+        document.getElementById('checkout-section').scrollIntoView({ behavior: 'smooth' });
+      }, 600);
+    }
+
+    function resetCheckout() {
+      document.getElementById('checkout-section').classList.remove('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ── 뉴스레터 ──
+    function trackNewsletterSignup(e) {
+      e.preventDefault();
+      const email = document.getElementById('email-input').value;
+      pushEvent('newsletter_signup', {
+        email_domain: email.split('@')[1] || 'unknown',
+        location: 'footer_banner'
+      });
+      showToast('구독이 완료되었습니다');
+      document.getElementById('email-input').value = '';
+    }
+
+    // ── 네비 클릭 ──
+    function trackNavClick(menu) {
+      pushEvent('navigation_click', { menu_item: menu, location: 'gnb' });
+    }
+
+    // ── 히어로 CTA ──
+    function trackHeroCTA() {
+      pushEvent('cta_click', { button_text: '컬렉션 보기', location: 'hero' });
+      document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // ── 초기 page_view ──
+    pushEvent('page_view', {
+      page_title: 'NOIR STUDIO — 메인',
+      page_location: window.location.href
+    });
+
+    // ── 렌더링 ──
+    renderProducts();
+  </script>
+</body>
+</html>
 
