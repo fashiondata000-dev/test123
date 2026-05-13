@@ -8,14 +8,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-N9BXKJ85');</script>
 <!-- End Google Tag Manager -->
-
-  
   <meta charset="UTF-8">
   <title>GTM 실습 — 페이지 2</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #f5f5f5; font-family: 'DM Sans', sans-serif; padding: 40px; color: #111; }
+    body { background: #f5f5f5; font-family: 'DM Sans', sans-serif; padding: 40px; color: #111; padding-top: 64px; padding-bottom: 220px; }
 
     h1 { font-family: 'DM Mono', monospace; font-size: 14px; letter-spacing: 2px; color: #888; margin-bottom: 40px; }
 
@@ -27,11 +25,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
 
     .btn {
-      display: inline-block;
-      padding: 12px 28px;
-      background: #111; color: #fff;
-      border: none; font-size: 13px;
-      font-family: 'DM Sans', sans-serif;
+      display: inline-block; padding: 12px 28px;
+      background: #111; color: #fff; border: none;
+      font-size: 13px; font-family: 'DM Sans', sans-serif;
       cursor: pointer; margin: 6px; letter-spacing: 1px;
     }
     .btn:hover { background: #333; }
@@ -41,13 +37,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .btn.danger:hover { background: #a33; }
 
     .event-label {
-      display: inline-block;
-      font-family: 'DM Mono', monospace; font-size: 10px;
-      background: #e8f4e8; color: #2d7a2d;
+      display: inline-block; font-family: 'DM Mono', monospace;
+      font-size: 10px; background: #e8f4e8; color: #2d7a2d;
       padding: 2px 8px; margin-left: 8px; vertical-align: middle;
     }
 
-    /* 사이즈 버튼 */
     .size-btn {
       width: 48px; height: 48px;
       border: 1px solid #ddd; background: #fff;
@@ -56,32 +50,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
     .size-btn.selected, .size-btn:hover { background: #111; color: #fff; border-color: #111; }
 
-    /* 가격 표시 */
     .price-box {
-      display: inline-block;
-      padding: 16px 24px;
-      background: #fff;
-      border: 1px solid #ddd;
-      margin-bottom: 12px;
+      display: inline-block; padding: 16px 24px;
+      background: #fff; border: 1px solid #ddd; margin-bottom: 12px;
     }
     .product-price { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; }
     .product-price .original { font-size: 13px; color: #aaa; text-decoration: line-through; margin-left: 8px; }
 
-    /* 구매 완료 */
     .purchase-done {
-      display: none;
-      background: #111; color: #fff;
-      padding: 32px; margin-top: 16px;
-      text-align: center;
+      display: none; background: #111; color: #fff;
+      padding: 32px; margin-top: 16px; text-align: center;
     }
     .purchase-done.show { display: block; }
     .purchase-done h3 { font-size: 20px; font-weight: 300; margin-bottom: 8px; }
     .purchase-done p { color: #888; font-size: 12px; margin-bottom: 20px; }
 
-
-
     .toast {
-      position: fixed; top: 20px; left: 50%;
+      position: fixed; top: 70px; left: 50%;
       transform: translateX(-50%) translateY(-10px);
       background: #111; color: #fff;
       padding: 8px 20px; font-size: 12px;
@@ -89,14 +74,101 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       pointer-events: none; z-index: 9999;
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── 상단 로그인 바 ── */
+    #login-bar {
+      position: fixed; top: 0; left: 0; right: 0; height: 52px;
+      background: #0d0d0d; color: #fff;
+      display: flex; align-items: center; gap: 14px;
+      padding: 0 28px; z-index: 1000;
+      font-family: 'DM Mono', monospace; font-size: 12px;
+      border-bottom: 1px solid #222;
+    }
+    #login-bar .bar-label { color: #555; letter-spacing: 2px; font-size: 10px; }
+    #login-bar select {
+      padding: 5px 10px; background: #1a1a1a; color: #ccc;
+      border: 1px solid #333; font-size: 11px;
+      font-family: 'DM Mono', monospace; cursor: pointer; border-radius: 2px;
+    }
+    #login-bar .login-btn {
+      padding: 5px 16px; background: #7fca7f; color: #0d0d0d;
+      border: none; font-size: 11px; cursor: pointer;
+      font-family: 'DM Mono', monospace; letter-spacing: 1px; font-weight: 500;
+    }
+    #login-bar .login-btn:hover { background: #6ab86a; }
+    #login-bar .logout-btn {
+      padding: 5px 14px; background: transparent; color: #555;
+      border: 1px solid #333; font-size: 11px; cursor: pointer;
+      font-family: 'DM Mono', monospace;
+    }
+    #login-bar .logout-btn:hover { border-color: #666; color: #888; }
+    #user-status { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+    #user-badge {
+      display: none; background: #0d2e0d; border: 1px solid #2d7a2d;
+      padding: 3px 12px; color: #7fca7f; font-size: 10px; letter-spacing: 1px;
+    }
+    #user-info { color: #888; font-size: 11px; }
+
+    /* ── DataLayer 뷰어 ── */
+    #dl-panel {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #0a0a0a; font-family: 'DM Mono', monospace; font-size: 11px;
+      max-height: 200px; overflow-y: auto;
+      border-top: 2px solid #1a1a1a; z-index: 999;
+    }
+    #dl-panel .dl-header {
+      position: sticky; top: 0; background: #0a0a0a;
+      padding: 6px 16px; border-bottom: 1px solid #1a1a1a;
+      color: #333; letter-spacing: 2px; font-size: 10px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    #dl-panel .dl-header .dl-dot { color: #7fca7f; margin-right: 6px; animation: blink 1.2s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    #dl-panel .dl-clear { color: #333; cursor: pointer; font-size: 10px; }
+    #dl-panel .dl-clear:hover { color: #666; }
+    #dl-entries { padding: 4px 0; }
+    .dl-entry {
+      padding: 5px 16px; border-bottom: 1px solid #111;
+      display: grid; grid-template-columns: 65px 180px 120px 1fr;
+      gap: 8px; align-items: center;
+    }
+    .dl-entry .dl-time { color: #333; }
+    .dl-entry .dl-event { color: #e0e0e0; }
+    .dl-entry .dl-uid { color: #f0a500; }
+    .dl-entry .dl-params { color: #5a9a5a; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .dl-entry.ev-purchase { background: #1a0d0d; border-left: 2px solid #c44; }
+    .dl-entry.ev-login    { background: #0d1a0d; border-left: 2px solid #2d7a2d; }
+    .dl-entry.ev-page     { background: #0d0d1a; border-left: 2px solid #2d2d7a; }
   </style>
 </head>
 <body>
+
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N9BXKJ85"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <h1>GTM 실습 — PAGE 2 / 2 &nbsp;&nbsp; <a href="index.html" style="color:#888;font-size:11px;">← 페이지 1로</a></h1>
+
+<!-- ── 상단 로그인 바 ── -->
+<div id="login-bar">
+  <span class="bar-label">USER ID</span>
+  <select id="user-select">
+    <option value="">-- 가상 회원 선택 --</option>
+    <option value="usr_1001|김민준|minjun@gmail.com">👤 김민준 · usr_1001</option>
+    <option value="usr_1002|이서연|seoyeon@naver.com">👤 이서연 · usr_1002</option>
+    <option value="usr_1003|박지호|jiho@kakao.com">👤 박지호 · usr_1003</option>
+    <option value="usr_1004|최수아|sua@gmail.com">👤 최수아 · usr_1004</option>
+    <option value="usr_1005|정우진|woojin@naver.com">👤 정우진 · usr_1005</option>
+  </select>
+  <button class="login-btn" onclick="doLogin()">LOGIN</button>
+  <div id="user-status">
+    <div id="user-badge">● LOGGED IN</div>
+    <span id="user-info"></span>
+    <button class="logout-btn" id="logout-btn" style="display:none" onclick="doLogout()">LOGOUT</button>
+  </div>
+</div>
+
+<h1>GTM 실습 — PAGE 2 / 2 &nbsp;&nbsp; <a href="page1.html" style="color:#888;font-size:11px;">← 페이지 1로</a></h1>
 
 <!-- 1. 사이즈 선택 -->
 <div class="section">
@@ -138,45 +210,119 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <button class="btn danger" onclick="checkout()">결제하기</button>
   <div class="purchase-done" id="purchase-done">
     <h3>✓ 구매 완료</h3>
-    <p>purchase 이벤트가 dataLayer에 푸시되었습니다</p>
-    <button class="btn outline" style="color:#fff;border-color:#fff;" onclick="reset()">다시 실습하기</button>
+    <p id="purchase-summary"></p>
+    <button class="btn outline" style="color:#fff;border-color:#fff;" onclick="resetCheckout()">다시 실습하기</button>
   </div>
 </div>
 
-
-
 <div class="toast" id="toast"></div>
+
+<!-- ── DataLayer 실시간 뷰어 ── -->
+<div id="dl-panel">
+  <div class="dl-header">
+    <div><span class="dl-dot">●</span> DATALAYER MONITOR — 실시간 이벤트 스트림</div>
+    <span class="dl-clear" onclick="document.getElementById('dl-entries').innerHTML=''">CLEAR</span>
+  </div>
+  <div id="dl-entries"></div>
+</div>
 
 <script>
   window.dataLayer = window.dataLayer || [];
   let selectedSize = null;
 
-  function push(name, params) {
-    window.dataLayer.push({ event: name, ...params });
-    toast(name + ' ✅');
+  // page1에서 로그인한 상태 sessionStorage로 이어받기
+  let currentUser = JSON.parse(sessionStorage.getItem('gtm_demo_user') || 'null');
+
+  function doLogin() {
+    const sel = document.getElementById('user-select');
+    if (!sel.value) { toast('⚠ 회원을 선택하세요'); return; }
+    const [uid, name, email] = sel.value.split('|');
+    currentUser = { uid, name, email };
+    sessionStorage.setItem('gtm_demo_user', JSON.stringify(currentUser));
+    applyUserUI();
+    push('login', { method: 'select' }, true);
+  }
+
+  function doLogout() {
+    push('logout', {}, true);
+    currentUser = null;
+    sessionStorage.removeItem('gtm_demo_user');
+    applyUserUI();
+    document.getElementById('user-select').value = '';
+  }
+
+  function applyUserUI() {
+    const badge     = document.getElementById('user-badge');
+    const info      = document.getElementById('user-info');
+    const logoutBtn = document.getElementById('logout-btn');
+    if (currentUser) {
+      badge.style.display = 'block';
+      info.textContent    = currentUser.name + ' · ' + currentUser.uid;
+      logoutBtn.style.display = 'block';
+    } else {
+      badge.style.display = 'none';
+      info.textContent    = 'Guest (비로그인)';
+      logoutBtn.style.display = 'none';
+    }
+  }
+
+  function push(eventName, params = {}, isAuth = false) {
+    const uid     = currentUser ? currentUser.uid : null;
+    const payload = { event: eventName, ...params };
+    if (uid) payload.user_id = uid;
+    if (isAuth && uid) window.dataLayer.push({ user_id: uid });
+    window.dataLayer.push(payload);
+    renderDL(eventName, uid, params);
+    toast(eventName + ' ✅');
+  }
+
+  function renderDL(eventName, uid, params) {
+    const el   = document.getElementById('dl-entries');
+    const time = new Date().toTimeString().slice(0, 8);
+    const paramStr = Object.entries(params || {})
+      .map(([k, v]) => `${k}=${JSON.stringify(v)}`)
+      .join('  ');
+
+    const typeClass =
+      eventName === 'purchase'  ? 'ev-purchase' :
+      eventName === 'login'     ? 'ev-login'    :
+      eventName === 'page_view' ? 'ev-page'     : '';
+
+    const row = document.createElement('div');
+    row.className = 'dl-entry ' + typeClass;
+    row.innerHTML = `
+      <span class="dl-time">${time}</span>
+      <span class="dl-event">${eventName}</span>
+      <span class="dl-uid">${uid ? '👤 ' + uid : '— guest'}</span>
+      <span class="dl-params">${paramStr || '—'}</span>
+    `;
+    el.prepend(row);
   }
 
   function selectSize(btn, size) {
     document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     selectedSize = size;
-    push('select_size', { item_id: 'P001', item_name: '울 코트', size: size });
+    push('select_size', { item_id: 'P001', item_name: '울 코트', size });
   }
 
   function addToCart() {
-    if (!selectedSize) { toast('사이즈를 먼저 선택하세요!'); return; }
+    if (!selectedSize) { toast('⚠ 사이즈를 먼저 선택하세요!'); return; }
     push('add_to_cart', { item_id: 'P001', item_name: '울 코트', price: 298000, size: selectedSize, currency: 'KRW' });
   }
 
   function checkout() {
     push('begin_checkout', { value: 298000, currency: 'KRW' });
     setTimeout(() => {
-      push('purchase', { transaction_id: 'ORD-' + Date.now(), value: 298000, currency: 'KRW' });
+      const txId = 'ORD-' + Date.now();
+      push('purchase', { transaction_id: txId, value: 298000, currency: 'KRW', item_name: '울 코트' });
+      const summary = document.getElementById('purchase-summary');
+      summary.textContent = `transaction_id: ${txId}  |  user_id: ${currentUser ? currentUser.uid : 'guest'}  |  ₩298,000`;
       document.getElementById('purchase-done').classList.add('show');
     }, 600);
   }
 
-  function reset() {
+  function resetCheckout() {
     document.getElementById('purchase-done').classList.remove('show');
     selectedSize = null;
     document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
@@ -189,6 +335,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     setTimeout(() => t.classList.remove('show'), 2000);
   }
 
+  // 초기화 — page1에서 이어받은 로그인 상태 복원
+  applyUserUI();
+  if (currentUser) {
+    const sel = document.getElementById('user-select');
+    for (let opt of sel.options) {
+      if (opt.value.startsWith(currentUser.uid + '|')) { sel.value = opt.value; break; }
+    }
+  }
   push('page_view', { page: 'page2', page_location: window.location.href });
 </script>
 </body>
